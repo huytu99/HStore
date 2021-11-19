@@ -1,21 +1,25 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import Navigation from './Navigation';
+import Register from './screens/User/Register';
+import SignInScreen from './screens/User/testLogin';
+import Login from './screens/User/Login';
+import HomeItems from './screens/CategoryScreen/HomeItem';
+import Accessories from './screens/CategoryScreen/Accessories';
+import Cart from './screens/TabScreen/Cart';
+import Information from './screens/User/InforUser';
+import Clothes from './screens/CategoryScreen/Clothes';
+
+import { Provider as ReduxProvider } from 'react-redux';
+import configureStore from "./redux/store";
+const store = configureStore();
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+   return (
+      <ReduxProvider store={store}>
+         <Navigation />
+      </ReduxProvider>
+
+   )
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
