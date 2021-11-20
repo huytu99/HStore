@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Pressable,TextInput, TouchableOpacity, Button  } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { StackActions } from "@react-navigation/native";
 
 export default function LoginForm({ navigation }) {
     const [username, setUsername] = useState('')
@@ -19,6 +20,7 @@ export default function LoginForm({ navigation }) {
             body: JSON.stringify({
                 username: username,
                 password: password,
+                
             })
         })
         .then((res) => res.text())     
@@ -31,43 +33,23 @@ export default function LoginForm({ navigation }) {
                 let dataUser = JSON.parse(data)
                 if (dataUser) {
                     dispatch({
+                        type: 'LOGIN',
+                        payload: dataUser.accessToken, 
+                    })
+
+                    console.log(dataUser)
+
+                    dispatch({
                         type: 'ADD_TO_INFOR',
                         payload: dataUser.userLogin, 
-                    
                     })
-                    alert("OK")
-                    console.log(typeof dataUser)
-                }
+                } 
             } catch (error) {
                 console.log(error)
             }
         })
         
     }
-
-    /*const onSubmit = async(data) => {
-        await AsyncStorage.setItem('token', username)
-        if(data.status === 'SUCCESS') {
-            console.log('nice')
-            navigation.navigate('Home')
-        }else{
-            console.log('error')
-        }
-    }
-    onSubmit()
-
-    const tokenLogin = async() =>{ 
-        const value = await AsyncStorage.getItem('token')
-        if(value !== null){
-        console.log("Connected")
-    }else{
-        console.log("Unconnected")
-    }}
-    tokenLogin()*/
-    useEffect(() => {
-        submitData();
-      }, []);
-    
 
     return(
         <View style={styles.wrapper}>

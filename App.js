@@ -8,16 +8,13 @@ import Accessories from './screens/CategoryScreen/Accessories';
 import Cart from './screens/TabScreen/Cart';
 import Information from './screens/User/InforUser';
 import Clothes from './screens/CategoryScreen/Clothes';
+import RootNavigation from "./navigation/RootNavigation";
 
-import { Provider as ReduxProvider } from 'react-redux';
-import configureStore from "./redux/store";
-const store = configureStore();
+
 
 export default function App() {
    return (
-      <ReduxProvider store={store}>
          <Navigation />
-      </ReduxProvider>
 
    )
 }

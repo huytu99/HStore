@@ -1,8 +1,17 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, SafeAreaView } from 'react-native';
 import { BorderlessButton, TouchableOpacity } from "react-native-gesture-handler";
+import { useDispatch } from 'react-redux';
 
 export default function Account({ navigation }) {
+
+  const dispatch = useDispatch();
+
+  const logOut = () => dispatch({
+      type: 'LOGOUT',
+      payload: null
+  })
+
     return(
        
       <SafeAreaView style={styles.container} >
@@ -25,7 +34,7 @@ export default function Account({ navigation }) {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate("Login")}
+          onPress={logOut}
         >
           <Text style={{color: "red", paddingLeft: 10}}>Đăng xuất</Text>
         </TouchableOpacity>

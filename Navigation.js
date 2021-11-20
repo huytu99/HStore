@@ -7,7 +7,6 @@ import  FontAwesome5Icons from 'react-native-vector-icons/FontAwesome5'
 
 import Home from './screens/TabScreen/Home';
 import Account from './screens/TabScreen/Account';
-import Orders from './screens/TabScreen/Orders';
 import Cart from "./screens/TabScreen/Cart";
 
 import ClothesSceen from "./screens/CategoryScreen/Clothes";
@@ -15,52 +14,53 @@ import HatScreen from "./screens/CategoryScreen/Hat";
 import ShoesScreen from "./screens/CategoryScreen/Shoes";
 import AccessoriesScreen from "./screens/CategoryScreen/Accessories";
 
-import Login from "./screens/User/Login";
-import Register from "./screens/User/Register";
+import Login from "./screens/User/Login"
+import SignupForm from "./screens/LoginScreen/SingupForm";
 import Information from "./screens/User/InforUser";
+
+import { Provider as ReduxProvider } from 'react-redux';
+import configureStore from "./redux/store";
+const store = configureStore();
+
+import { useSelector } from "react-redux";
 
 
 const Tab = createBottomTabNavigator();
-const HomeStack = createStackNavigator();
-const AccountStack = createStackNavigator();
+const Stack = createStackNavigator();
 
-const HomeStackScreen = () => (
-    <HomeStack.Navigator>
-        <HomeStack.Screen name="Trang chủ" component={Home} options={{
-                        headerShown: false
-                    }} />
-        <HomeStack.Screen name="Hat" component={HatScreen} />
-        <HomeStack.Screen name="Clothes" component={ClothesSceen} />
-        <HomeStack.Screen name="Shoes" component={ShoesScreen} />
-        <HomeStack.Screen name="Accessories" component={AccessoriesScreen} />
-       
+const AuthStack = () => {
+    return (
+    <Stack.Navigator screenOptions={{
+        headerShown: false}} >
+        <Stack.Screen name="Login" component={Login}/>
+        <Stack.Screen name= "Register" component={SignupForm}/>
+    </Stack.Navigator>
+    )
+}
 
-    </HomeStack.Navigator>
-)
-const AccountStackScreen = () => (
-    <AccountStack.Navigator initialRouteName={Account} >
-        <AccountStack.Screen name="AccountScreen" component={Account} options={{
-            headerShown: false }} />
-        <AccountStack.Screen name="Login" component={Login} options={{
-            headerShown: false }} />
-        <AccountStack.Screen name= "Register" component={Register} options={{
-            headerShown: false
-        }}/>
-        <AccountStack.Screen name= "Information" component={Information} options={{
-            headerShown: false
-        }}/>
-    </AccountStack.Navigator>
-)
-
-
-export default function Navigatorr() {
+const HomeStack = () => {
+    return (
+    <Stack.Navigator>
+        <Stack.Screen name="Tab" component={TabStack} 
+            options={{
+                headerShown: false}} />
+        <Stack.Screen name="Hat" component={HatScreen} />
+        <Stack.Screen name="Clothes" component={ClothesSceen} />
+        <Stack.Screen name="Shoes" component={ShoesScreen} />
+        <Stack.Screen name="Accessories" component={AccessoriesScreen} />
+        <Stack.Screen name="Information" component={Information} 
+            options={{
+                headerShown: false}} />
+    </Stack.Navigator>
+    )
+}
+const TabStack = () => {
     return(
-        <NavigationContainer>
-           <Tab.Navigator 
-                screenOptions={{
-                    style:{
-                        height: 65}
-                    }}
+        <Tab.Navigator 
+            screenOptions={{
+                style:{
+                    height: 65}
+                }}
             
             screenOptions={({route}) => ({
                 headerShown: false,
@@ -68,7 +68,7 @@ export default function Navigatorr() {
                 const icons = {
                     Home: 'home',
                     Cart: 'cart-plus',
-                    Account: 'user-cog'
+                    Options: 'user-cog'
                 };
                 return (
                     <FontAwesome5Icons name={icons[route.name]}
@@ -81,10 +81,32 @@ export default function Navigatorr() {
            
 
            > 
-                 <Tab.Screen name="Home" children={HomeStackScreen} />
+                 <Tab.Screen name="Home" children={Home} />
                  <Tab.Screen name="Cart" component={Cart} />
-                 <Tab.Screen name="Account" children={AccountStackScreen} />
+                 <Tab.Screen name="Options" children={Account} />
+
            </Tab.Navigator>
-        </NavigationContainer>
+    )
+}
+
+const RootNavigation = () => {
+    const accessToken = useSelector((state) => state.loginReducer.accessToken);
+    return (
+        <NavigationContainer>
+            {
+                accessToken === null ? 
+                <AuthStack /> : <HomeStack />
+            }
+         </NavigationContainer>
+
+    )
+}
+
+export default function Navigation() {
+    return(
+        <ReduxProvider store={store}>
+                <RootNavigation />
+        </ReduxProvider>
+
     )
 }

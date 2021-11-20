@@ -18,23 +18,8 @@ let authReducer = (state = defaultState, action) => {
 
                 };
                 console.log(newState);
-                
-
                 return newState;
         }
-        case 'LOGIN_SUCCESS':
-            {
-                let newState = { ...state };
-                console.log('LOGIN_SUCCESS')
-                newState.dataUser = {
-                    data: [...newState.dataUser.data, action.payload],
-                };
-                console.log(newState);
-                return newState;
-            }
-        case "ADD_CONTACT":
-            state= [...state, action.payload];
-            return state;
         default:
             return state;
     }
