@@ -5,7 +5,7 @@ const AccessoriesModel = require('../models/Product/Accessories')
 const ClothesModel = require('../models/Product/Clothes')
 const HatModel = require('../models/Product/Hat')
 const ShoesModel = require('../models/Product/Shoes')
-
+const MongoClient = require('../models/Product/AllProduct')
 
 router.get('/product',  (req, res) => {
     ProductModel.find({})
@@ -15,7 +15,11 @@ router.get('/product',  (req, res) => {
     .catch(err => {
         res.status(500).json('Loi server')
     })
+    
 })
+
+
+
 
 router.post('/product/home', async (req, res) => {
     const { id, image, title, price, describe} = req.body

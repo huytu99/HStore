@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-export default function Accessories  () {
+export default function Clothes  ({navigation}) {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
-  const getAccessories = async () => {
+  const getClothes = async () => {
      try {
       const response = await fetch('http://192.168.1.9:3000/admin/product/accessories');
       const json = await response.json();
@@ -19,7 +19,7 @@ export default function Accessories  () {
   }
 
   useEffect(() => {
-    getAccessories();
+    getClothes();
   }, []);
 
   const dispatch = useDispatch();
@@ -27,33 +27,32 @@ export default function Accessories  () {
       type: 'ADD_TO_CART',
       payload: {
         ...item, 
-    }  
+        
+    }
   })
+ 
 
   const renderItem = ({item}) => {
     return(  
-    <TouchableOpacity onPress={()=> alert(item.title)}>
-      <View style={styles.container}>
-          <Image 
-            source={{
-                uri: item.image }}
-            style={{ width: "100%", height: 500}} />    
+        <View style={styles.container}>
+            <Image 
+              source={{
+                  uri: item.image }}
+              style={{ width: "100%", height: 500}} />    
 
-        <View style={styles.infoText}>
-            <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
-            <Text style={{color: 'red', fontWeight: 'bold'}}>{item.price} VND</Text>
+          <View style={styles.infoText}>
+              <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
+              <Text style={{color: 'red', fontWeight: 'bold'}}>{item.price} VND</Text>
+          </View>
+          <TouchableOpacity 
+              // onPress={() => selectItem(item)}
+              onPress={() => navigation.navigate('ProductDetail1', item)}
+              style={styles.buttonAdd}>
+                <Text style={styles.buttonText}>Thông tin sản phẩm</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity 
-            onPress={() => selectItem(item)}
-            style={styles.buttonAdd}>
-              <Text style={styles.buttonText}>Thêm vào giỏ hàng</Text>
-        </TouchableOpacity>
-   
-        </View>
-    </TouchableOpacity >
-    )};
+  )}
 
-    
   return (
     <View style={{ flex: 1, padding: 24 }}>
       {isLoading ? <ActivityIndicator/> : (
@@ -67,12 +66,12 @@ export default function Accessories  () {
   );
 };
 
-
 const styles = StyleSheet.create({
     container: {
         marginTop: 20,
         marginBottom: 20,
         borderWidth: 1,
+        backgroundColor:"#87cefa"
     },
     infoText: {
         flexDirection: "row", 

@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-community/async-storage";
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Pressable,TextInput, TouchableOpacity, Button  } from 'react-native';
 import { useDispatch } from 'react-redux';

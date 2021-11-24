@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function Hat  () {
+export default function Hat  ({navigation}) {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
@@ -51,9 +51,9 @@ export default function Hat  () {
             <Text style={{color: 'red', fontWeight: 'bold'}}>{item.price} VND</Text>
         </View>
         <TouchableOpacity 
-            onPress={() => selectItem(item)}
-            style={styles.buttonAdd}>
-              <Text style={styles.buttonText}>Thêm vào giỏ hàng</Text>
+              onPress={() => navigation.navigate('ProductDetail1', item)}
+              style={styles.buttonAdd}>
+              <Text style={styles.buttonText}>Thông tin sản phẩm</Text>
         </TouchableOpacity>
         </View>
     </TouchableOpacity >

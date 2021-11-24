@@ -27,7 +27,8 @@ const productSchema = new Schema({
         type: String,
     },
 },{
-    collection: 'Product'
+    collection: 'Hat',
+
 })
 
 const ProductModel = mongoose.model('product', productSchema)

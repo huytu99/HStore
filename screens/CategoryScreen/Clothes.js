@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 
-export default function Clothes  () {
+export default function Clothes  ({navigation}) {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
@@ -45,9 +45,10 @@ export default function Clothes  () {
               <Text style={{color: 'red', fontWeight: 'bold'}}>{item.price} VND</Text>
           </View>
           <TouchableOpacity 
-              onPress={() => selectItem(item)}
+              // onPress={() => selectItem(item)}
+              onPress={() => navigation.navigate('ProductDetail1', item)}
               style={styles.buttonAdd}>
-                <Text style={styles.buttonText}>Thêm vào giỏ hàng</Text>
+                <Text style={styles.buttonText}>Thông tin sản phẩm</Text>
           </TouchableOpacity>
         </View>
   )}

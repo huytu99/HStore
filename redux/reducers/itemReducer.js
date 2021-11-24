@@ -15,16 +15,6 @@ let itemReducer = (state = defaultState, action) => {
                     image: action.payload.image,
                     describe: action.payload.describe
                 };
-            // }else{
-            //     console.log('REMOVE FROM CART')
-            //     newState.selectItems = {
-            //         items: [
-            //             ...newState.selectItems.items.filter(
-            //                 (item) => item.title !== action.payload.title),
-            //         ],
-            //         title: action.payload.title,
-            //         }
-            //     }
                 console.log(newState);
                 return newState;
         }
@@ -40,6 +30,20 @@ let itemReducer = (state = defaultState, action) => {
                     }
                 console.log(newState);
                 return newState;
+            }
+        case 'ADD_TO_SEARCH': 
+            {
+                let newState = { ...state };
+                        console.log('ADD TO SEARCH')
+                    newState.selectItems = {
+                        items: [...newState.selectItems.items, action.payload],
+                        title: action.payload,
+                        price: action.payload,
+                        image: action.payload,
+
+                    };
+                    console.log(newState);
+                    return newState;
             }
         
         default:

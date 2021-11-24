@@ -1,8 +1,9 @@
 import React from "react";
 import { View, Text, StyleSheet } from 'react-native';
-import SearchBar from "../../components/SearchBar";
+import SearchBar from '../HomeScreen/SearchBar';
 import Menu from "../../components/Menu";
 import { ScrollView } from "react-native-gesture-handler";
+import SearchComponent from "../../components/SearchBar";
 
 import HomeItems from "../CategoryScreen/HomeItem";
 
@@ -13,7 +14,7 @@ export default function HomeComponent({ navigation }) {
         
         <View  >
             <View style={styles.container}>
-                <SearchBar />
+                <SearchBar navigation={navigation} />
             </View>
     
             <View style={styles.menuBackground}>

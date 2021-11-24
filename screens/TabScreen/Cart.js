@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CartItem from "../CategoryScreen/CartItem";
 
 export default function ViewCart() {
-    const {items} = useSelector((state) => state.itemReducer.selectItems)
+    const {items, price} = useSelector((state) => state.itemReducer.selectItems)
     const total = items
     .map((item => item.price))
     .reduce((prev, curr) => prev + curr, 0)

@@ -8,7 +8,7 @@ export default function Information({navigation}) {
 
     return(
         <View style={{backgroundColor:"#f5fffa", flex: 1}}>
-            <Button title="Back" onPress={()=> navigation.navigate("AccountScreen")}/>
+            <Button title="Back" onPress={()=> navigation.navigate("Options")}/>
             <View style={styles.titleView}>
                 <Text style={styles.titleText}>Your Information</Text>
             </View>

@@ -14,6 +14,9 @@ import HatScreen from "./screens/CategoryScreen/Hat";
 import ShoesScreen from "./screens/CategoryScreen/Shoes";
 import AccessoriesScreen from "./screens/CategoryScreen/Accessories";
 
+import ProductDetail from "./screens/ProductDetails/Detail";
+import ProductDetail1 from "./screens/ProductDetails/Detail1";
+import SearchBarComponent from "./components/SearchBar";
 import Login from "./screens/User/Login"
 import SignupForm from "./screens/LoginScreen/SingupForm";
 import Information from "./screens/User/InforUser";
@@ -44,6 +47,9 @@ const HomeStack = () => {
         <Stack.Screen name="Tab" component={TabStack} 
             options={{
                 headerShown: false}} />
+        <Stack.Screen name="Search" component={SearchBarComponent} />
+        <Stack.Screen name="ProductDetail" component={ProductDetail} />
+        <Stack.Screen name="ProductDetail1" component={ProductDetail1} />
         <Stack.Screen name="Hat" component={HatScreen} />
         <Stack.Screen name="Clothes" component={ClothesSceen} />
         <Stack.Screen name="Shoes" component={ShoesScreen} />
