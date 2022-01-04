@@ -1,5 +1,5 @@
 let defaultState = {
-    selectItems: { items:[], title:'', price:'', image:'',describe:'' }
+    selectItems: { items:[], title:'', price:'', image:'',describe:'', quantity: ''}
 }
 
 let itemReducer = (state = defaultState, action) => {
@@ -13,10 +13,12 @@ let itemReducer = (state = defaultState, action) => {
                     title: action.payload.title,
                     price: action.payload.price,
                     image: action.payload.image,
-                    describe: action.payload.describe
+                    describe: action.payload.describe,
+                    quantity: action.payload.quantity,
                 };
                 console.log(newState);
                 return newState;
+                
         }
         case 'REMOVE_FROM_CART':
             {
@@ -28,22 +30,7 @@ let itemReducer = (state = defaultState, action) => {
                             (selectItems) => selectItems.title !== action.payload.title),
                     ],
                     }
-                console.log(newState);
                 return newState;
-            }
-        case 'ADD_TO_SEARCH': 
-            {
-                let newState = { ...state };
-                        console.log('ADD TO SEARCH')
-                    newState.selectItems = {
-                        items: [...newState.selectItems.items, action.payload],
-                        title: action.payload,
-                        price: action.payload,
-                        image: action.payload,
-
-                    };
-                    console.log(newState);
-                    return newState;
             }
         
         default:

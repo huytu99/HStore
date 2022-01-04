@@ -1,19 +1,19 @@
 const express = require("express");
 const router = express.Router();
 
-const Bill = require("../models/Bill")
+const BillModel = require("../models/Bill")
 
 router.post('/bill', async function(req, res){
 
-    const newbill = new Bill();
-    newbill.address = req.body.address 
+    const newbill = new BillModel();
     newbill.name = req.body.name 
+    newbill.address = req.body.address 
     newbill.phone = req.body.phone 
-    newbill.oderid = req.body.oderid
+    newbill.email = req.body.email
     newbill.title = req.body.title
+    newbill.price = req.body.price
+    newbill.image = req.body.image
     newbill.quantity = req.body.quantity
-    newbill.total=req.body.total
-    newbill.time=req.body.time
     try{
         const Bill = await newbill.save()
         res.send(Bill);

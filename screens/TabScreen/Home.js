@@ -1,10 +1,8 @@
 import React from "react";
-import { View, Text, StyleSheet } from 'react-native';
-import SearchBar from '../HomeScreen/SearchBar';
-import Menu from "../../components/Menu";
-import { ScrollView } from "react-native-gesture-handler";
-import SearchComponent from "../../components/SearchBar";
+import { View, StyleSheet } from 'react-native';
 
+import Header from '../HomeScreen/Header';
+import Menu from "../HomeScreen/Menu";
 import HomeItems from "../CategoryScreen/HomeItem";
 
 
@@ -14,15 +12,15 @@ export default function HomeComponent({ navigation }) {
         
         <View  >
             <View style={styles.container}>
-                <SearchBar navigation={navigation} />
+                <Header navigation={navigation} />
             </View>
     
             <View style={styles.menuBackground}>
                 <Menu navigation={navigation} />
             </View>
  
-            <View>
-                <HomeItems />
+            <View style={{marginTop: -15}}>
+                <HomeItems navigation={navigation} />
             </View>
 
         </View>
@@ -44,10 +42,7 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
         marginTop: 10,
-        borderRadius: 10
+       
 
-    },
-    item:{
-        
-    },
+    }
     })

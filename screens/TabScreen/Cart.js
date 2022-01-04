@@ -1,19 +1,70 @@
-import React, {useState, Component} from "react";
-import { ScrollView, Text, View, Button, Image, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import React from "react";
+import { ScrollView, Text, View, StyleSheet, Dimensions, TouchableOpacity, Alert } from "react-native";
 var {width} = Dimensions.get("window")
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CartItem from "../CategoryScreen/CartItem";
 
 export default function ViewCart() {
-    const {items, price} = useSelector((state) => state.itemReducer.selectItems)
+    const {items} = useSelector((state) => state.itemReducer.selectItems);
+    const {name, email, phone, address} = useSelector((state) => state.authReducer.dataUser);
+    const dispatch = useDispatch();
+
     const total = items
     .map((item => item.price))
     .reduce((prev, curr) => prev + curr, 0)
 
-    const totalVND = total.toLocaleString('it-IT', {
-        style: 'currency',
-        currency: "VND",
-    });
+    const totalVND =  `${total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ${'VND'}`
+            
+    const submitItem = async() => {
+        for (let i = 0; i < items.length; i++) {
+        await fetch("http://192.168.1.187:3000/user/bill", {
+            method: 'POST',
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: name,
+                address: address,
+                email: email,
+                phone: phone,
+                title: items[i].title,
+                price: items[i].price,
+                image: items[i].image,
+                quantity: items[i].quantity,
+            })  
+        })
+        .then((res) => res.text())     
+        .then(data => {
+                let dataBill = JSON.parse(data)
+                if (dataBill) {
+                    dispatch({
+                        type: 'ADD_TO_ORDER',
+                        payload: dataBill
+                    })
+                    Alert.alert('Đặt hàng thành công!!')
+                } 
+        })
+
+    }
+    }
+
+    const checkOutButton = () =>
+    
+    Alert.alert(
+      "Xác nhận mua hàng",
+      "Bấm OK để đặt hàng!",
+      [
+        { text: "OK", onPress: (submitItem)},
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        }
+        
+      ]
+    );
         return(
             <View style={styles.container}>
                 <View style={styles.header}>
@@ -35,7 +86,7 @@ export default function ViewCart() {
                             Total: {totalVND}
                         </Text>
                     </View>
-                    <TouchableOpacity style={styles.checkoutBox}>
+                    <TouchableOpacity style={styles.checkoutBox} onPress={(checkOutButton)}>
                         <Text style={styles.checkoutText}>Check Out</Text>
                     </TouchableOpacity>
                     
@@ -53,8 +104,8 @@ const styles = StyleSheet.create({
         flex: 1, 
         alignItems:'center', 
         justifyContent:'center',
-        backgroundColor:'gray',
-        borderRadius:5,
+        backgroundColor:'#a9a9a9',
+        
         marginTop: 20,
         marginLeft: 20,
         
@@ -63,12 +114,12 @@ const styles = StyleSheet.create({
         backgroundColor:"#4682b4",
         padding: 20,
         borderWidth: 1, 
+        alignItems:'center'
 
     },
     headerText:{
-        fontSize: 28, 
-        color: 'black', 
-        fontWeight:'bold',
+        fontSize: 25, 
+        color: 'white', 
     },
     totalText:{
         fontSize: 20,
@@ -76,11 +127,14 @@ const styles = StyleSheet.create({
         color:'red'
     },
     totalBox:{
-        borderWidth: 1, 
+        borderTopWidth: 1, 
+        borderBottomWidth: 1,
         backgroundColor:'white',
         padding: 7,
         marginBottom: 10,
-        marginTop:10
+        marginTop: 5
+       
+        
     },
     checkoutBox:{
         backgroundColor:"#4682b4",
@@ -88,7 +142,8 @@ const styles = StyleSheet.create({
         alignItems:'center',
         padding: 10,
         borderRadius:5,
-        marginBottom: 10
+        marginBottom: 10,
+        marginLeft: 20
     },
     checkoutText: {
         fontSize: 24,

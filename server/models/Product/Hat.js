@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/User', {
+mongoose.connect('mongodb://localhost/HStore', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -26,6 +26,9 @@ const hatSchema = new Schema({
     describe: {
         type: String,
     },
+    quantity: {
+        type: Number
+    }
 },{
     collection: 'Hat'
 })

@@ -8,7 +8,7 @@ export default function HomeItems({navigation}) {
 
   const getHomeItems = async () => {
      try {
-      const response = await fetch('http://192.168.1.9:3000/admin/product/accessories');
+      const response = await fetch('http://192.168.1.187:3000/admin/product');
       const json = await response.json();
       setData(json);
     } catch (error) {
@@ -22,30 +22,22 @@ export default function HomeItems({navigation}) {
     getHomeItems();
   }, []);
 
-  const dispatch = useDispatch();
-
-  const selectItem = (item) => dispatch({
-      type: 'ADD_TO_CART',
-      payload: {
-        ...item, 
-    }
-  })
-
   const renderItem = ({item}) => {
+    const currency =  `${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ${'VND'}`
     return(  
     <TouchableOpacity >
       <View style={styles.container}>
           <Image 
             source={{
                 uri: item.image }}
-            style={{ width: "100%", height: 500}} />    
+            style={{ width: "100%", height: 300}} />    
 
         <View style={styles.infoText}>
-            <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
-            <Text style={{color: 'red', fontWeight: 'bold'}}>{item.price} VND</Text>
+            <Text style={{fontWeight: 'bold', fontSize: 20}}>{item.title}</Text>
+            <Text style={{color: 'red', fontWeight: 'bold', fontSize: 18}}>{currency}</Text>
         </View>
         <TouchableOpacity 
-              onPress={() => navigation.navigate('ProductDetail1', item)}
+              onPress={() => navigation.navigate('ProductDetail', item)}
               style={styles.buttonAdd}>
               <Text style={styles.buttonText}>Thông tin sản phẩm</Text>
         </TouchableOpacity>

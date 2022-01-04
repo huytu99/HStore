@@ -1,11 +1,10 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, Image, Button } from 'react-native';
-import Fontisto from "react-native-vector-icons/Fontisto";
-import { useDispatch, useSelector } from 'react-redux';
+import React from "react";
+import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native';
+import { useDispatch } from 'react-redux';
+import Header from './Header';
 
 export default function ProductDetail({ navigation, route }) {
   const item = route.params;
-  // const {price, title, describe, image} = item;
 
   const dispatch = useDispatch();
   const selectItem = (item) => dispatch({
@@ -13,43 +12,77 @@ export default function ProductDetail({ navigation, route }) {
       payload: {
         ...item, 
     }  
+    
   })
+
+
+  const confirmButton = () =>
+    Alert.alert(
+      "Xác nhận",
+      "Bạn muốn chọn sản phẩm này chứ?",
+      [
+        { text: "OK", onPress: () => selectItem(item) },
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+
+          style: "cancel"
+        }
+        
+      ]
+    );
+
+  const currency =  `${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ${'VND'}`
 
     return(
         <View style={styles.container}>
-            <View>
-                 <Image source={{uri: item.image}} 
-                    style={styles.logoStyle}
-                />           
-            <Text style={{marginLeft: 200, fontWeight: 'bold', marginTop: 10}}>{item.title}</Text>
-            <Text style={{marginLeft: 10}}>Mô tả sản phẩm: {item.describe}</Text>
-            <Text style={{marginLeft: 10}}>{item.price} VND</Text>
-
-            <Text style={{marginLeft: 10}}>Kiểu dáng : form rộng rất to, tay lỡ</Text>
-            <Text style={{marginLeft: 10}}>Chất liệu: Thun cotton lụa 4 chiều 100% dày mềm mịn, đường may đẹp, chắc chắn, đảm bảo k bông tróc</Text>
-            <Text style={{marginLeft: 10}}>Hình in rõ nét </Text>
-            <Text style={{marginLeft: 10}}>Sản phẩm có độ co giãn</Text>
-            <Button title="Add to cart" onPress={() => selectItem(item)} />
-            <Button title="Check out" onPress={() => navigation.navigate('Cart')} />
-
+          <Header navigation={navigation}/>
+          <View>
+            <View style={styles.imageStyle}>
+                 <Image source={{uri: item.image}} style={{height:294}}/>    
             </View>
+            <View>       
+              <View style={{flexDirection:'row',marginLeft: 10, marginTop: 10, justifyContent:'space-between',marginRight: 30, marginBottom: 10 }}>
+                <Text style={{fontWeight: 'bold', fontSize: 20}}>{item.title}</Text>
+                <Text style={{color: 'red', fontSize: 17, fontWeight: 'bold'}}>{currency}</Text>
+              </View>
+              <Text style={{marginLeft: 10, marginRight: 10, fontSize: 16,fontWeight: 'bold'}}>Mô tả sản phẩm: </Text>
+              <Text style={{marginLeft: 10, marginRight: 10, fontSize: 16}}>👉  {item.describe}</Text>
+            </View>
+          </View>
+          <View >
+            <View style={{marginBottom: 10, paddingHorizontal: 40}}>
+              <Button  title="Thêm vào giỏ hàng" onPress={confirmButton} />
+            </View>
+            <View style={{marginBottom: 10, paddingHorizontal: 40}}>
+              <Button title="Check out" onPress={() => navigation.navigate('Cart')} />
+            </View>
+          </View>  
         </View>
 
 )}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    backgroundColor: "white",
-    
-
-    
-  },
-  logoStyle: {
-    height:200, 
-    width:'70%', 
-    marginTop: 90, 
-    marginLeft: 50
-    
-  }
-})
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1, 
+      backgroundColor: "white",
+      justifyContent:'space-between'
+    },
+    imageStyle: {
+      height: 300, 
+      width:'75%', 
+      marginLeft: 50,
+      borderWidth: 1
+      
+    },
+      buttonAdd:{
+        padding: 10,
+        backgroundColor: "#4682b4",
+        alignItems:'center',
+        color: 'black'
+      },
+      buttonText:{
+        color: 'white',
+        fontSize: 15, 
+      }
+  })

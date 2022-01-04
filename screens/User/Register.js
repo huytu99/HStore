@@ -1,17 +1,15 @@
-import React, { useState } from "react";
-import { StyleSheet, Image, View } from 'react-native';
-import CreateUser from "../LoginScreen/SingupForm";
+import React from "react";
+import { StyleSheet, Text, View } from 'react-native';
+import SignupForm from "../LoginScreen/SingupForm";
 
 
 export default function Register({ navigation }) {
     return(
         <View style={styles.container}>
         <View style={styles.logoContainer}>
-          <Image source={require("../logoStore/logoHStore.png")} 
-          style={{width: '50%', height: '50%'}} 
-          />
+          <Text style={{fontSize: 20, fontWeight:'bold'}}>Create your account</Text>
         </View>
-        <CreateUser navigation={navigation} />
+        <SignupForm navigation={navigation} />
         </View>
 
 )}
@@ -20,10 +18,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, 
     backgroundColor: "white",
-    
   },
   logoContainer: {
     alignItems: "center",
-    paddingTop: 70,
+    paddingTop: 40,
+
   }
 })

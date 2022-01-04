@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/User', {
+mongoose.connect('mongodb://localhost/HStore', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -43,7 +43,7 @@ const AccountSchema = new Schema({
         default: Date.now
     }
 },{
-    collection: 'Account'
+    collection: 'User'
 })
 const AccountModel = mongoose.model('account', AccountSchema)
 

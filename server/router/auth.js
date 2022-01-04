@@ -53,16 +53,11 @@ router.post('/login', async function(req, res){
      // Kiểm tra password
     const passLogin = await bcrypt.compare(req.body.password, userLogin.password);
     if(!passLogin) return res.status(400).send(("Mật khẩu không hợp lệ"))
-
-    const accessToken = jwt.sign({_id: userLogin._id}, 'mk')
-   
     
+    // Ký và tạo token
+    const accessToken = jwt.sign({_id: userLogin._id}, 'mk')
+    return res.send({userLogin, accessToken} )
 
-     //res.send("Bạn đã đăng nhập thành công")
-     
-  // Ký và tạo token
-
-     res.send({userLogin, accessToken} )
 })
 
 router.get('/', verifyAccessToken, (req, res) => {

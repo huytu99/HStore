@@ -6,7 +6,7 @@ import 'react-native-gesture-handler';
 import  FontAwesome5Icons from 'react-native-vector-icons/FontAwesome5'
 
 import Home from './screens/TabScreen/Home';
-import Account from './screens/TabScreen/Account';
+import Options from './screens/TabScreen/Options';
 import Cart from "./screens/TabScreen/Cart";
 
 import ClothesSceen from "./screens/CategoryScreen/Clothes";
@@ -15,10 +15,10 @@ import ShoesScreen from "./screens/CategoryScreen/Shoes";
 import AccessoriesScreen from "./screens/CategoryScreen/Accessories";
 
 import ProductDetail from "./screens/ProductDetails/Detail";
-import ProductDetail1 from "./screens/ProductDetails/Detail1";
-import SearchBarComponent from "./components/SearchBar";
+import HistoryOrder from "./screens/OrderCompleted/historyOrder";
+import SearchBar from "./screens/HomeScreen/SearchBar";
 import Login from "./screens/User/Login"
-import SignupForm from "./screens/LoginScreen/SingupForm";
+import Register from "./screens/User/Register";
 import Information from "./screens/User/InforUser";
 
 import { Provider as ReduxProvider } from 'react-redux';
@@ -26,6 +26,7 @@ import configureStore from "./redux/store";
 const store = configureStore();
 
 import { useSelector } from "react-redux";
+
 
 
 const Tab = createBottomTabNavigator();
@@ -36,7 +37,7 @@ const AuthStack = () => {
     <Stack.Navigator screenOptions={{
         headerShown: false}} >
         <Stack.Screen name="Login" component={Login}/>
-        <Stack.Screen name= "Register" component={SignupForm}/>
+        <Stack.Screen name= "Register" component={Register}/>
     </Stack.Navigator>
     )
 }
@@ -47,13 +48,14 @@ const HomeStack = () => {
         <Stack.Screen name="Tab" component={TabStack} 
             options={{
                 headerShown: false}} />
-        <Stack.Screen name="Search" component={SearchBarComponent} />
-        <Stack.Screen name="ProductDetail" component={ProductDetail} />
-        <Stack.Screen name="ProductDetail1" component={ProductDetail1} />
-        <Stack.Screen name="Hat" component={HatScreen} />
-        <Stack.Screen name="Clothes" component={ClothesSceen} />
-        <Stack.Screen name="Shoes" component={ShoesScreen} />
-        <Stack.Screen name="Accessories" component={AccessoriesScreen} />
+        <Stack.Screen name="Search" component={SearchBar} />
+        <Stack.Screen name="HistoryOrder" component={HistoryOrder} options={{ title: 'Lịch sử mua hàng' }}/>
+        <Stack.Screen name="ProductDetail" component={ProductDetail} options={{
+                headerShown: false}}/>
+        <Stack.Screen name="Hat" component={HatScreen} options={{ title: 'Mũ nón' }}/>
+        <Stack.Screen name="Clothes" component={ClothesSceen} options={{ title: 'Quần áo' }}/>
+        <Stack.Screen name="Shoes" component={ShoesScreen} options={{ title: 'Giày dép' }}/>
+        <Stack.Screen name="Accessories" component={AccessoriesScreen} options={{ title: 'Phụ kiện' }}/>
         <Stack.Screen name="Information" component={Information} 
             options={{
                 headerShown: false}} />
@@ -61,6 +63,11 @@ const HomeStack = () => {
     )
 }
 const TabStack = () => {
+    const {items} = useSelector((state) => state.itemReducer.selectItems)
+    const count = items
+    .map((item => item.quantity))
+    .reduce((prev, curr) => prev + curr, 0)
+
     return(
         <Tab.Navigator 
             screenOptions={{
@@ -87,9 +94,9 @@ const TabStack = () => {
            
 
            > 
-                 <Tab.Screen name="Home" children={Home} />
-                 <Tab.Screen name="Cart" component={Cart} />
-                 <Tab.Screen name="Options" children={Account} />
+                 <Tab.Screen name="Home" component={Home} />
+                 <Tab.Screen name="Cart" component={Cart} options={{tabBarBadge: count}}/>
+                 <Tab.Screen name="Options" component={Options} />
 
            </Tab.Navigator>
     )

@@ -1,8 +1,11 @@
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/User', {
+mongoose.connect('mongodb://localhost/HStore', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
+
+const moment = require('moment-timezone');
+const dateVN = moment.tz(Date.now(), "Asia/Bangkok");
 
 const Schema = mongoose.Schema;
 
@@ -29,16 +32,22 @@ const billSchema = new Schema({
     },
     quantity: {
         type: String,
+    },
+    price: {
+        type: Number,
         required: true,
     },
-    total: {
+    image: {
         type: String,
         required: true,
     },
     createdAt: {
         type: Date,
-        default: Date.now,
+        default: dateVN,
     },
+    quantity: {
+        type: String
+    }
 
 },{
     collection: 'Bill'

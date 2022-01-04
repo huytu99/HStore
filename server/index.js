@@ -27,6 +27,9 @@ app.use('/admin/post', post)
 const productRouter = require('./router/product')
 app.use('/admin', productRouter)
 
+const billRouter = require('./router/bill')
+app.use('/user/', billRouter)
+
 app.get('/wellcome', (req, res, next)=>{
     res.send('Wellcome to my server')
 })
@@ -35,6 +38,4 @@ app.get('/wellcome', (req, res, next)=>{
 
 
 const PORT = 3000
-app.listen(PORT, () => {
-  console.log(`Example app listening at http://localhost:${PORT}`)
-})
+app.listen(PORT, console.log("Server is running on port 3000"))

@@ -4,7 +4,7 @@ const AccountModel = require('../models/Account')
 
 // lay thong tin user tu DB
 
-router.get('/',  (req, res) => {
+router.get('/info',  (req, res) => {
     AccountModel.find({})
     .then(data => {
         res.json(data)

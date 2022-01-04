@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const ProductModel = require('../models/Product')
+const ProductModel = require('../models/Product/AllProduct')
 const AccessoriesModel = require('../models/Product/Accessories')
 const ClothesModel = require('../models/Product/Clothes')
 const HatModel = require('../models/Product/Hat')
 const ShoesModel = require('../models/Product/Shoes')
-const MongoClient = require('../models/Product/AllProduct')
 
 router.get('/product',  (req, res) => {
     ProductModel.find({})
@@ -19,9 +18,7 @@ router.get('/product',  (req, res) => {
 })
 
 
-
-
-router.post('/product/home', async (req, res) => {
+router.post('/product', async (req, res) => {
     const { id, image, title, price, describe} = req.body
     
     ProductModel.findOne({
@@ -30,8 +27,7 @@ router.post('/product/home', async (req, res) => {
         .then(data => {
             if(data){    
                 res
-                .status(400)
-                .json({status: 'id sản phẩm đã tồn tại'})
+                .json( 'id sản phẩm đã tồn tại')
             }else{
             return ProductModel.create({
                 id: id,
@@ -43,18 +39,16 @@ router.post('/product/home', async (req, res) => {
         }
     })
     .then(data=>{
-        res.json({ 
-            status: 'SUCCESS',
-            message:'Đã thêm sản phẩm',
-            })
+        res.send(data)
     })
     .catch(err=>{
         res.status(500).json('Thêm sản phẩm thất bại')
     })
 })
 
+
 router.post('/product/accessories', async (req, res) => {
-    const { id, image, title, price, describe} = req.body
+    const { id, image, title, price, describe, quantity} = req.body
     
     AccessoriesModel.findOne({
             id: id,
@@ -70,15 +64,13 @@ router.post('/product/accessories', async (req, res) => {
                 image: image,
                 title: title,
                 price: price,
-                describe: describe
+                describe: describe,
+                quantity: quantity
             })
         }
     })
     .then(data=>{
-        res.json({ 
-            status: 'SUCCESS',
-            message:'Đã thêm sản phẩm',
-            })
+        res.send(data)
     })
     .catch(err=>{
         res.status(500).json('Thêm sản phẩm thất bại')
@@ -96,7 +88,7 @@ router.get('/product/accessories',  (req, res) => {
 })
 
 router.post('/product/hat', async (req, res) => {
-    const { id, image, title, price, describe} = req.body
+    const { id, image, title, price, describe, quantity} = req.body
     
     HatModel.findOne({
             id: id,
@@ -112,15 +104,13 @@ router.post('/product/hat', async (req, res) => {
                 image: image,
                 title: title,
                 price: price,
-                describe: describe
+                describe: describe,
+                quantity: quantity
             })
         }
     })
     .then(data=>{
-        res.json({ 
-            status: 'SUCCESS',
-            message:'Đã thêm sản phẩm',
-            })
+        res.send(data)
     })
     .catch(err=>{
         res.status(500).json('Thêm sản phẩm thất bại')
@@ -138,7 +128,7 @@ router.get('/product/hat',  (req, res) => {
 })
 
 router.post('/product/clothes', async (req, res) => {
-    const { id, image, title, price, describe} = req.body
+    const { id, image, title, price, describe, quantity} = req.body
     
     ClothesModel.findOne({
             id: id,
@@ -154,15 +144,13 @@ router.post('/product/clothes', async (req, res) => {
                 image: image,
                 title: title,
                 price: price,
-                describe: describe
+                describe: describe,
+                quantity: quantity
             })
         }
     })
     .then(data=>{
-        res.json({ 
-            status: 'SUCCESS',
-            message:'Đã thêm sản phẩm',
-            })
+        res.send(data)
     })
     .catch(err=>{
         res.status(500).json('Thêm sản phẩm thất bại')
@@ -181,7 +169,7 @@ router.get('/product/clothes',  (req, res) => {
 
 
 router.post('/product/shoes', async (req, res) => {
-    const { id, image, title, price, describe} = req.body
+    const { id, image, title, price, describe, quantity} = req.body
     
     ShoesModel.findOne({
             id: id,
@@ -197,15 +185,14 @@ router.post('/product/shoes', async (req, res) => {
                 image: image,
                 title: title,
                 price: price,
-                describe: describe
+                describe: describe,
+                quantity: quantity
             })
         }
     })
     .then(data=>{
-        res.json({ 
-            status: 'SUCCESS',
-            message:'Đã thêm sản phẩm',
-            })
+        res.send(data)
+
     })
     .catch(err=>{
         res.status(500).json('Thêm sản phẩm thất bại')

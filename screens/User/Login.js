@@ -1,14 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Image, View } from 'react-native';
 import LoginForm from "../LoginScreen/LoginForm";
-import SignInScreen from "./testLogin";
 
 
 export default function Login({ navigation }) {
     return(
         <View style={styles.container}>
         <View style={styles.logoContainer}>
-          <Image source={require("../logoStore/logoHStore.png")}
+          <Image source={require("../logoStore/LogoStore.png")}
           style={{width: '50%', height: '50%'}} 
           />
         </View>
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     alignItems: "center",
-    paddingTop: 70,
+    paddingTop: 50,
     
   }
 })

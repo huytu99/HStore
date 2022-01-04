@@ -1,21 +1,26 @@
-import React, { useEffect } from "react";
-import { StyleSheet, Text, View, BackHandler, Alert, Button } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 import { useSelector } from "react-redux";
+import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 
 export default function Information({navigation}) {
-    const {data, username, name, email, phone, address} = useSelector((state) => state.authReducer.dataUser);
+    const { username, name, email, phone, address} = useSelector((state) => state.authReducer.dataUser);
 
     return(
-        <View style={{backgroundColor:"#f5fffa", flex: 1}}>
-            <Button title="Back" onPress={()=> navigation.navigate("Options")}/>
+        <SafeAreaView style={{backgroundColor:"#f5fffa", flex: 1 }}>
+            <TouchableOpacity onPress={()=> navigation.goBack()}>
+                <View style={{marginTop: 40, marginLeft: 10}}>
+                    <FontAwesome5Icon name="arrow-left" size={25}/>
+                </View>
+            </TouchableOpacity>
+
             <View style={styles.titleView}>
                 <Text style={styles.titleText}>Your Information</Text>
             </View>
-            {
-                 data.map((item, index) => (  
+
             <View 
-                key={index} item={item}
                 style={styles.container}>
               
                 <Text style={styles.textTitle}>Username</Text>
@@ -44,8 +49,7 @@ export default function Information({navigation}) {
                 </View>
            
             </View>
- ))}
-        </View>
+        </SafeAreaView>
         
 )
 }
@@ -60,13 +64,13 @@ const styles = StyleSheet.create({
     borderWidth:1,
     padding: 10, 
     borderRadius: 5,
-    marginBottom: 20,
+    marginBottom: 10,
     marginRight: 100,
     backgroundColor:'#fdf5e6'
   },
   textTitle:{
     marginLeft: 5, 
-    marginBottom: 3, 
+     
     fontSize: 13
   },
   textInfor:{
@@ -82,6 +86,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: "#4682b4",
-    marginTop: 50
+
   }
 })

@@ -1,33 +1,12 @@
-// const MongoClient = require("mongodb").MongoClient;
-
-// const url = 'mongodb://localhost/User';
-
-// MongoClient.connect(url, (err, client) => {
-
-//     const db = client.db('User');
-    
-//     db.listCollections().toArray((err, collections) => {
-
-//        console.log(collections);
-//        console.log(typeof collections);
-
-
-//        client.close();
-//     });
-
-// });
-
-// module.exports = MongoClient
-
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://localhost/User', {
+mongoose.connect('mongodb://localhost/HStore', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
 
 const Schema = mongoose.Schema;
 
-const pr0ductSchema = new Schema({
+const productSchema = new Schema({
     id: {
         type: String,
         required: true,
@@ -47,10 +26,13 @@ const pr0ductSchema = new Schema({
     describe: {
         type: String,
     },
+    quantity: {
+        type: Number,
+    },
 },{
-    collection: 'Hat'
+    collection: 'All Product'
 })
 
-const pr0ductModel = mongoose.model('product1', pr0ductSchema)
+const ProductModel = mongoose.model('product', productSchema)
 
-module.exports = pr0ductModel
+module.exports = ProductModel

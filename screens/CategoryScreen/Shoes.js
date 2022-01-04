@@ -8,7 +8,7 @@ export default function Shoes ({navigation}) {
 
   const getShoes = async () => {
      try {
-      const response = await fetch('http://192.168.1.9:3000/admin/product/shoes');
+      const response = await fetch('http://192.168.1.187:3000/admin/product/shoes');
       const json = await response.json();
       setData(json);
     } catch (error) {
@@ -23,20 +23,21 @@ export default function Shoes ({navigation}) {
   }, []);
 
   const renderItem = ({item}) => {
+    const currency =  `${item.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} ${'VND'}`
     return(  
     <TouchableOpacity >
       <View style={styles.container}>
           <Image 
             source={{
                 uri: item.image }}
-            style={{ width: "100%", height: 500}} />    
+            style={{ width: "100%", height: 350}} />    
 
         <View style={styles.infoText}>
             <Text style={{fontWeight: 'bold'}}>{item.title}</Text>
-            <Text style={{color: 'red', fontWeight: 'bold'}}>{item.price} VND</Text>
+            <Text style={{color: 'red', fontWeight: 'bold'}}>{currency}</Text>
         </View>
         <TouchableOpacity 
-              onPress={() => navigation.navigate('ProductDetail1', item)}
+              onPress={() => navigation.navigate('ProductDetail', item)}
               style={styles.buttonAdd}>
               <Text style={styles.buttonText}>Thông tin sản phẩm</Text>
         </TouchableOpacity>

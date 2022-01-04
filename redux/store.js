@@ -1,6 +1,6 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore } from 'redux';
 
-import reducer from './reducers/index'
+import reducer from './index'
 
 export default function configureStore(initialState) {
     const store = createStore(reducer, initialState);

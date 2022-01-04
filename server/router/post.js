@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const AccountModel = require('../models/Account')
+const AccessoriesModel = require('../models/Product/Accessories')
 
 // them du lieu vao DB
 router.post('/', async (req, res) => {
@@ -41,5 +42,13 @@ router.delete('/', (req, res) => {
     res.json('Delete')
 })
 
-
+router.get('/product/accessories',  (req, res) => {
+    AccessoriesModel.find({})
+    .then(data => {
+        res.json(data)
+    })
+    .catch(err => {
+        res.status(500).json('Loi server')
+    })
+})
 module.exports = router

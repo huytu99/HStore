@@ -1,7 +1,4 @@
-let defaultState = {
-    accessToken: null
-
-}
+let defaultState = { accessToken: null }
 
 let loginReducer = (state = defaultState, action) => {
     switch(action.type) {
